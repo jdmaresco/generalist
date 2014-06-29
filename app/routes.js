@@ -55,14 +55,14 @@ module.exports = function(app, passport) {
 	// INSTANCES : DELETE INSTANCE ( ALLOWED: ADMINS )
 
 	// LOGOUT
-	app.get('/logout', function(req,res) {
+	app.get('/logout', function(req, res) {
 			req.logout();
 			res.redirect('/');
 	})
 
 };
 
-function isLoggedIn(res, req, next) {
+function isLoggedIn(req, res, next) {
 
 	// if user is authenticated, move on
 	if (req.isAuthenticated())
@@ -73,7 +73,7 @@ function isLoggedIn(res, req, next) {
 
 }
 
-function isAdmin(res, req, next) {
+function isAdmin(req, res, next) {
 
 	// if user is authenticated, move on
 	if (req.isAuthenticated())								// TODO: add && req.user.type == 'admin'
