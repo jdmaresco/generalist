@@ -17,7 +17,7 @@ var configDB = require('./config/database.js');
 
 mongoose.connect(configDB.url);
 
-// require('./config/passport')(passport);
+require('./config/passport')(passport);
 
 // EXPRESS
 

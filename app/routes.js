@@ -13,7 +13,11 @@ module.exports = function(app, passport) {
 	})
 
 	// LOGIN : PROCESS FORM
-	// app.post('/login', passport stuff);
+	//app.post('/login', passport.authenticate('local-signup', {
+	//	successRedirect : '/instances',
+	//	failureRedirect : '/signup',
+	//	failureFlash		: true
+	//}));
 
 	// SIGNUP : PAGE RENDER
 	app.get('/signup', function(req,res) {
@@ -23,13 +27,17 @@ module.exports = function(app, passport) {
 	})
 
 	// LOGIN : PROCESS FORM
-	// app.post('/signup', passport stuff);
+	app.post('/signup', passport.authenticate('local-signup', {
+		successRedirect : '/instances',
+		failureRedirect : '/signup',
+		failureFlash		: true
+	}));
 
 
 	// INSTANCES : INDEX VIEW ( ALLOWED: SIGNED IN USERS )
 	app.get('/instances', isLoggedIn, function(req,res) {
 		res.render('instances.ejs', {
-			user : req.user 							// get user out of session, pass to template
+			user : req.user 							// get user out of session, pass to templatein
 		})
 	})
 
