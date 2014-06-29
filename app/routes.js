@@ -13,11 +13,11 @@ module.exports = function(app, passport) {
 	})
 
 	// LOGIN : PROCESS FORM
-	//app.post('/login', passport.authenticate('local-signup', {
-	//	successRedirect : '/instances',
-	//	failureRedirect : '/signup',
-	//	failureFlash		: true
-	//}));
+	app.post('/login', passport.authenticate('local-login', {
+		successRedirect : '/instances',
+		failureRedirect : '/login',
+		failureFlash		: true
+	}));
 
 	// SIGNUP : PAGE RENDER
 	app.get('/signup', function(req,res) {

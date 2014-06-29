@@ -15,6 +15,8 @@ module.exports = function(passport) {
 		});
 	});
 
+	// PASSPORT SIGNUP STRATEGY (LOCAL)
+
 	passport.use('local-signup', new LocalStrategy({
 		usernameField : 'username',
 		passwordField : 'password',
@@ -26,16 +28,9 @@ module.exports = function(passport) {
 		process.nextTick(function() {
 			User.findOne({ 'local.username' : username }, function(err, user) {
 
-				if (err) {
-
-					return done(err);
-
-				}
-
-				if (user) {
-
-					return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
-
+				if (err) 		return done(err);
+				if (user)	{ 
+										return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
 				} else {
 
 					var newUser							= new User();
@@ -55,6 +50,22 @@ module.exports = function(passport) {
 			});
 		});
 
+	}));
+
+	// PASSPORT LOGIN STRATEGY (LOCAL)
+
+	passport.use('local-login', new LocalStrategy({
+		usernameField : 'username',
+		passwordField : 'password',
+		passReqToCallback : true
+	},
+	function(req, username, password, done) {
+		User.findOne({ 'local.email' : email }, function(err, user) {
+			if (err) 														return done(err);
+			if (!user) 													return done(null, false, req.flash('loginMessage', 'No user found'));
+			if (!user.validPassword(password)) 	return done(null, false, req.flash('loginMessage', 'That\'s not the right password.'));
+																					return done(null, user);	
+		});
 	}));
 
 };
